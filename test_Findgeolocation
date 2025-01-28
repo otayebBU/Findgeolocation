@@ -1,0 +1,36 @@
+#include <cassert>
+#include <iostream>
+
+// Unit Test for distance function
+void test_distance(){
+    // Test Case 1: Distance between same points (should be 0)
+    assert(distance(0.0, 0.0, 0.0, 0.0) == 0.0);
+
+    // Test Case 2: Distance between two points
+    double dist = distance(0.0, 0.0, 90.0, 0.0); // Distance between two points at the equator and 90 degrees longitude
+    assert(abs(dist - 10007.543) < 1); // Expected distance ~10007 km
+
+    // Test Case 3: Same latitude, different longitude (should be a known distance)
+    dist = distance(0.0, 0.0, 0.0, 90.0); // Expected distance is about 10007 km
+    assert(abs(dist - 10007.543) < 1); // Approximate distance between the two points on the equator
+}
+
+// Unit Test for closest_distance function
+void test_closest_distance(){
+    // Test Case 1: Two locations in vector1, two locations in vector2
+    vector<pair<double, double>> vector1 = {{40.7128, -74.0060}, {34.0522, -118.2437}};  // New York, Los Angeles
+    vector<pair<double, double>> vector2 = {{51.5074, -0.1278}, {48.8566, 2.3522}};   // London, Paris
+    closest_distance(vector1, vector2);  // Expected output should be the closest location between these points.
+
+    // Test Case 2: One location in vector1, one location in vector2
+    vector1 = {{40.7128, -74.0060}};  // New York
+    vector2 = {{48.8566, 2.3522}};   // Paris
+    closest_distance(vector1, vector2);  // Expected output should be Paris
+}
+
+int main() {
+    test_distance();
+    test_closest_distance();
+    cout << "All tests passed!" << endl;
+    return 0;
+}
